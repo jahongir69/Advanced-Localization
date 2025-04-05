@@ -49,3 +49,4 @@ class AuthController extends Controller
         return $this->successResponse([], __('auth.logout_success'));
     }
 
+}
