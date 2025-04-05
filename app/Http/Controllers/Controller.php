@@ -2,23 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 abstract class Controller
 {
-    protected function success($data = [], $message = 'Success', $status = 200): JsonResponse
+    use AuthorizesRequests, ValidatesRequests;
+
+    public function successResponse($data, $message = '', $status = 200)
     {
         return response()->json([
             'success' => true,
-            'message' => __($message),
+            'message' => $message,
             'data' => $data
         ], $status);
     }
 
-    protected function error($message = 'Error', $status = 400): JsonResponse
+    public function errorResponse($message = '', $status = 400, $errors = [])
     {
         return response()->json([
             'success' => false,
-            'message' => __($message),
-            'data' => null
+            'message' => $message,
+            'errors' => $errors
         ], $status);
     }
 }
